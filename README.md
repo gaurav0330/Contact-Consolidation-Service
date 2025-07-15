@@ -1,140 +1,136 @@
-Bitespeed Identity Reconciliation
-This project is a backend service for Bitespeed's Identity Reconciliation Task. It provides an API to identify and consolidate contact information based on email and phone number, handling primary and secondary contacts with appropriate linking logic. The application is built using Node.js, TypeScript, Express, and Prisma, with a PostgreSQL database hosted on Neon. It is deployed on Render and accessible via a public endpoint.
-Table of Contents
+# ContactFuse – Identity Reconciliation API
 
-Project Overview
-Features
-Tech Stack
-Getting Started
-Prerequisites
-Installation
-Environment Variables
-Database Setup
-Running Locally
+A backend service that reconciles and consolidates user identity information based on email and phone number, following the Bitespeed Identity Reconciliation Task specification.
 
+**Hosted Live:** [https://bitespeed-wl6u.onrender.com/identify](https://bitespeed-wl6u.onrender.com/identify)  
+**GitHub Repo:** [https://github.com/gaurav0330/biteSpeed.git](https://github.com/gaurav0330/biteSpeed.git)
 
-API Endpoint
-Request Format
-Response Format
-Test Cases
+---
 
+## 📌 Table of Contents
 
-Deployment
-Documentation
-Submission Details
-License
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [API Endpoint](#api-endpoint)
+- [Test Cases](#test-cases)
+- [Deployment](#deployment)
+- [Documentation](#documentation)
+- [License](#license)
 
-Project Overview
-The Bitespeed Identity Reconciliation service processes contact information (email and phone number) to:
+---
 
-Identify existing contacts in the database.
-Create new contacts if no matches are found.
-Link secondary contacts to primary contacts based on matching email or phone number.
-Consolidate contact details, ensuring primary contacts are prioritized and duplicates are handled.
+## 🧩 Project Overview
 
-The service exposes a single POST /identify endpoint to handle these operations, returning a consolidated contact object with primary and secondary contact IDs, emails, and phone numbers.
-Features
+The **ContactFuse** service processes contact data to:
 
-Contact Identification: Matches contacts by email or phone number.
-Primary/Secondary Linking: Links new contacts as secondary to existing primary contacts or creates new primary contacts.
-Consolidation Logic: Merges multiple primary contacts into one, converting others to secondary based on creation time.
-Soft Deletion: Supports deletedAt for soft deletion of contacts.
-Type-Safe Code: Built with TypeScript for robust type checking.
-Scalable Database: Uses Neon PostgreSQL for reliable data storage.
-Deployed Service: Hosted on Render for public access.
+- Identify existing contacts based on email or phone number.
+- Create new contacts if no match is found.
+- Link secondary contacts to primary ones.
+- Merge multiple primary contacts into one based on creation time.
+- Consolidate contact details to avoid duplication.
 
-Tech Stack
+The service exposes a single `POST /identify` endpoint and returns a unified contact object.
 
-Backend: Node.js, Express, TypeScript
-Database: PostgreSQL (Neon)
-ORM: Prisma
-Deployment: Render
-Tools: ts-node, Postman (for testing)
+---
 
-Getting Started
-Prerequisites
+## 🚀 Features
 
-Node.js: v20.18.0 or higher
-npm: v10.x or higher
-PostgreSQL: Neon account or local PostgreSQL instance
-Git: For cloning the repository
-Postman: For testing the API
+- 🔍 Contact identification by email or phone
+- 🔗 Primary-secondary contact linking
+- 🔁 Merge logic for conflicting contacts
+- 🗑️ Soft deletion using `deletedAt`
+- 📐 Type-safe codebase using TypeScript
+- 🌐 Public API hosted on Render
+- 💾 PostgreSQL on Neon with Prisma ORM
 
-Installation
+---
 
-Clone the Repository:
-git clone https://github.com/ayush7662/BiteSpeed.git
-cd BiteSpeed
+## 🛠️ Tech Stack
 
+| Layer       | Tools                         |
+|-------------|-------------------------------|
+| Backend     | Node.js, Express, TypeScript  |
+| ORM         | Prisma                        |
+| Database    | PostgreSQL (Neon)             |
+| Deployment  | Render                        |
+| Testing     | Postman                       |
 
-Install Dependencies:
+---
+
+## 🧪 Getting Started
+
+### 🔧 Prerequisites
+
+- Node.js v20.18.0+
+- npm v10.x+
+- PostgreSQL (Neon or local)
+- Git
+- Postman (optional for testing)
+
+### 📦 Installation
+
+```bash
+git clone https://github.com/gaurav0330/biteSpeed.git
+cd biteSpeed
 npm install
+```
 
+### 🔐 Environment Variables
 
+Create a `.env` file:
 
-Environment Variables
-Create a .env file in the project root with the following:
-DATABASE_URL="postgresql://<user>:<password>@<host>/<database>?sslmode=require"
+```ini
+DATABASE_URL="your_neon_postgresql_connection_string"
 PORT=3000
+```
 
+Replace `DATABASE_URL` with your actual connection string.
 
-Replace DATABASE_URL with your Neon PostgreSQL connection string (e.g., postgresql://neondb_owner:npg_dhXn4AuMW2RO@ep-yellow-firefly-a5djn58q-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require).
-PORT defaults to 3000 unless specified.
+### 🧱 Database Setup
 
-Database Setup
-
-Initialize Prisma:
+```bash
 npx prisma init
-
-
-Ensure prisma/schema.prisma matches the provided schema (see Documentation).
-
-
-Apply Migrations:
 npx prisma migrate dev --name init
-
-
-Creates the Contact table in the database.
-
-
-Generate Prisma Client:
 npx prisma generate
+```
 
+### ▶️ Run the server
 
-
-Running Locally
-
-Start the Server:
+```bash
 npm run start
+# Local server: http://localhost:3000
+```
 
+---
 
-The server runs on http://localhost:3000.
+## 📡 API Endpoint
 
+**POST /identify**
 
-Test the Endpoint:
+**URL:**
 
-Use Postman to send requests to http://localhost:3000/identify (see API Endpoint).
+- **Live:** [https://bitespeed-wl6u.onrender.com/identify](https://bitespeed-wl6u.onrender.com/identify)
+- **Local:** [http://localhost:3000/identify](http://localhost:3000/identify)
 
-
-
-API Endpoint
-The service exposes a single endpoint for contact identification and reconciliation.
-
-URL: https://bitespeed-wl6u.onrender.com/identify (deployed) or http://localhost:3000/identify (local)
-Method: POST
+**Headers:**
+```json
 Content-Type: application/json
+```
 
-Request Format
+**Request Format:**
+
+```json
 {
   "email": "string | null",
   "phoneNumber": "string | null"
 }
+```
 
+**Response Format:**
 
-At least one of email or phoneNumber is required.
-Both can be null or a string (e.g., "lorraine@hillvalley.edu", "123456").
-
-Response Format
+```json
 {
   "contact": {
     "primaryContatctId": number,
@@ -143,24 +139,24 @@ Response Format
     "secondaryContactIds": number[]
   }
 }
+```
 
+---
 
-primaryContatctId: ID of the primary contact.
-emails: Array of unique emails, with the primary contact’s email first.
-phoneNumbers: Array of unique phone numbers, with the primary contact’s phone number first.
-secondaryContactIds: Array of secondary contact IDs linked to the primary contact.
+## ✅ Test Cases
 
-Test Cases
+### 1. New Contact
 
-New Contact:
+**Request:**
 
-Request:{
-  "email": "lorraine@hillvalley.edu",
-  "phoneNumber": "123456"
-}
+```json
+{ "email": "lorraine@hillvalley.edu", "phoneNumber": "123456" }
+```
 
+**Response:**
 
-Response:{
+```json
+{
   "contact": {
     "primaryContatctId": 1,
     "emails": ["lorraine@hillvalley.edu"],
@@ -168,20 +164,20 @@ Response:{
     "secondaryContactIds": []
   }
 }
+```
 
+### 2. Existing Contact with New Email
 
-Status: 200 OK
+**Request:**
 
+```json
+{ "email": "mcfly@hillvalley.edu", "phoneNumber": "123456" }
+```
 
-Existing Contact with New Email:
+**Response:**
 
-Request:{
-  "email": "mcfly@hillvalley.edu",
-  "phoneNumber": "123456"
-}
-
-
-Response:{
+```json
+{
   "contact": {
     "primaryContatctId": 1,
     "emails": ["lorraine@hillvalley.edu", "mcfly@hillvalley.edu"],
@@ -189,98 +185,66 @@ Response:{
     "secondaryContactIds": [2]
   }
 }
+```
 
+### 3. Phone Only
 
-Status: 200 OK
+**Request:**
 
+```json
+{ "email": null, "phoneNumber": "123456" }
+```
 
-Partial Input (Phone Only):
+### 4. Invalid Input
 
-Request:{
-  "email": null,
-  "phoneNumber": "123456"
-}
+**Request:**
 
+```json
+{ "email": null, "phoneNumber": null }
+```
 
-Response:{
-  "contact": {
-    "primaryContatctId": 1,
-    "emails": ["lorraine@hillvalley.edu", "mcfly@hillvalley.edu"],
-    "phoneNumbers": ["123456"],
-    "secondaryContactIds": [2]
-  }
-}
+**Response:**
 
+```json
+{ "error": "At least one of email or phoneNumber is required" }
+```
 
-Status: 200 OK
+---
 
+## 🚀 Deployment
 
-Invalid Input:
+**Deployed on Render**
 
-Request:{
-  "email": null,
-  "phoneNumber": null
-}
+**Live Endpoint:** [https://bitespeed-wl6u.onrender.com/identify](https://bitespeed-wl6u.onrender.com/identify)
 
+**Render Settings:**
 
-Response:{
-  "error": "At least one of email or phoneNumber is required"
-}
+**Build Command:**
 
+```bash
+npm install && npx prisma generate && npx prisma migrate deploy
+```
 
-Status: 400 Bad Request
+**Start Command:**
 
+```bash
+npm run start
+```
 
+**Environment Variables:**
 
-Deployment
-The application is deployed on Render and accessible at:
-
-Deployed URL: https://bitespeed-wl6u.onrender.com/identify
-
-Deployment Steps
-
-Push to GitHub:
-
-Repository: https://github.com/ayush7662/BiteSpeed
-All code, including README.md and DOCUMENTATION.md, is pushed to the main branch.
-
-
-Render Configuration:
-
-Build Command: npm install && npx prisma generate && npx prisma migrate deploy
-Start Command: npm run start
-Environment Variables:DATABASE_URL=postgresql://neondb_owner:npg_dhXn4AuMW2RO@ep-yellow-firefly-a5djn58q-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require
+```ini
+DATABASE_URL=your_neon_postgres_url
 PORT=3000
+```
 
+## 📄 License
 
-
-
-Verification:
-
-The endpoint is tested with Postman to ensure all test cases pass.
-Database state is verified using Prisma Studio and psql.
-
-
-
-Documentation
-Additional details, including the database schema, code structure, and implementation logic, are available in:
-
-DOCUMENTATION.md
-
-Key highlights:
-
-Database Schema: Defines the Contact model with fields like id, email, phoneNumber, linkedId, linkPrecedence, createdAt, updatedAt, and deletedAt.
-Implementation: Uses Prisma for database operations, Express for routing, and TypeScript for type safety.
-Error Handling: Validates input and handles database errors gracefully.
-
-Submission Details
-This project is submitted for the Bitespeed Identity Reconciliation Task:
-
-GitHub Repository: https://github.com/ayush7662/BiteSpeed
-Deployed Endpoint: https://bitespeed-wl6u.onrender.com/identify
-Submission Form: Google Form
-
-The application has been thoroughly tested locally and on Render, ensuring all test cases are met and the endpoint is publicly accessible.
-License
 This project is licensed under the ISC License.
 
+---
+
+## 🔗  Live Details
+
+- **GitHub:** [https://github.com/gaurav0330/biteSpeed.git](https://github.com/gaurav0330/biteSpeed.git)
+- **Live API:** [https://bitespeed-wl6u.onrender.com/identify](https://bitespeed-wl6u.onrender.com/identify)
