@@ -1,9 +1,8 @@
-# ContactFuse – Identity Reconciliation API
+# Contact-Consolidation-Service
 
 A backend service that reconciles and consolidates user identity information based on email and phone number, following the Bitespeed Identity Reconciliation Task specification.
 
-**Hosted Live:** [https://bitespeed-wl6u.onrender.com/identify](https://bitespeed-wl6u.onrender.com/identify)  
-**GitHub Repo:** [https://github.com/gaurav0330/biteSpeed.git](https://github.com/gaurav0330/biteSpeed.git)
+**Live:** [Click Here](https://bitespeed-wl6u.onrender.com/identify)  
 
 ---
 
