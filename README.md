@@ -110,7 +110,7 @@ npm run start
 
 **URL:**
 
-- **Live:** [https://bitespeed-wl6u.onrender.com/identify](https://bitespeed-wl6u.onrender.com/identify)
+- **Live:** [Click Here](https://bitespeed-wl6u.onrender.com/identify)
 - **Local:** [http://localhost:3000/identify](http://localhost:3000/identify)
 
 **Headers:**
@@ -214,7 +214,7 @@ Content-Type: application/json
 
 **Deployed on Render**
 
-**Live Endpoint:** [https://bitespeed-wl6u.onrender.com/identify](https://bitespeed-wl6u.onrender.com/identify)
+**Live Endpoint:** [Click Here ](https://bitespeed-wl6u.onrender.com/identify)
 
 **Render Settings:**
 
@@ -246,4 +246,4 @@ This project is licensed under the ISC License.
 ## 🔗  Live Details
 
 - **GitHub:** [https://github.com/gaurav0330/biteSpeed.git](https://github.com/gaurav0330/biteSpeed.git)
-- **Live API:** [https://bitespeed-wl6u.onrender.com/identify](https://bitespeed-wl6u.onrender.com/identify)
+- **Live API:** [Click Here](https://bitespeed-wl6u.onrender.com/identify)
